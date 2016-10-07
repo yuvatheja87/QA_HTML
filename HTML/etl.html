@@ -25,12 +25,72 @@
 		<li><a href="jenkins.html">JENKINS</a></li>
 	</ul>
 </div>
-Extraction Transformation Loading
-Sources
-OLTP:Online Transactional Processing  
+<pre>Extraction Transformation Loading(ETL)
+<b>Sources</b>
+data comes in many forms like flat files,oracle,sql server,etc.,
+<b>OLTP</b>:OnLine Transactional Processing  (RDBMS)
 it maintain current data, databases are in normalized form-no redundancy(data is over ridden when updated)
-data warehouses->
-historical data
+<b>data warehouse</b>
+de-Normalized form
+historical data -> stores all the data before and after changes/updates
+to analyse data is from data warehouse
+<b>OLAP</b>: OnLine Analytical Processing System
+integrate data
+summarize data
+by maintaining historical data
+
+Examples:
+finance-> Credit Card Analysis
+Insurance-> Claims, Fraud Analysis
+Telecomminications-> call recors analysis
+
+<b>ETL</b>
+Extracting relevant data
+Tranforming the data into required form
+loading into data warehouse
+
+<b>Tester's role in ETL Testing</b>
+Source to Target counts
+Source to Target Data validation
+Transformation and Business rules
+Batch Sequence and Dependency testing
+Constaints, View Testing
+Duplicate Testing
+performance Testing
+Negative Testing
+
+<b>Testers role in Business Intelligence Testing</b>
+Dashboard Charts Testing
+Structure Testing and Dashboards/reports
+Prompts and filter Testing
+Navigation and Drill down Testing
+Data Validation Testing
+Matrix Validation
+Security Testing
+Performance Testing
+BItesting tools:
+OBIEE
+COGNOS
+BO
+
+<b>Prerequisites for ETL Testing </b>
+Experiance on software Testing
+Knowledge on Database
+unix / linux commands
+ETL Tools (Informatica PC , Data Stage, JASPER, SSIS,ABINITIO and ODI etc..  )
+
+
+
+
+
+
+
+
+
+</pre>
+
+
+
 
 
 </body>

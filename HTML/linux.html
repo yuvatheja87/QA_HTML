@@ -1,0 +1,646 @@
+<html>
+<head>
+	<title>LINUX</title>
+<link rel="stylesheet" type="text/css" href="styles.css" />
+<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+	<center><h1>LINUX ESSENTIALS</h1></center>
+	<div id="tabhead">
+		<ul id="tabs" style="list-style-type:none">
+			<li><a href="index.html">HOME</a></li>
+			<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+			<li><a href="git.html">GIT(HUB)</a></li>
+			<li><a href="ant.html">ANT</a></li>
+			<li><a href="maven.html">MAVEN</a></li>
+			<li><a href="jenkins.html">JENKINS</a></li>
+		</ul>
+	</div>
+	Linux Distributions
+	<ul>
+	<li>CENTOS</li><li>DEBIAN</li><li>FEDORA</li><li>GENTOO</li>
+	<li>OPENSUSE</li><li>REDHAT</li><li>SLACKWARE</li>
+	<li>SUSE</li><li>UBUNTU</li></ul>
+	<h3>linux as desktop</h3>
+	<ul><li>KDE (mandriva & SUSE)</li><li>GNOME(REDHAT, CENTOS)</li><li>LXDE(older computers)</li><li>UNITY(ubuntu)</li><li>XFCE(commercial desktop)</li></ul>
+	<h3>linux desktop applications</h3>
+	<div id="d1">
+	OpenOffice.org <-similar to ms office <br>
+	CalibreOffice <- e-book managinfg tool <br>
+	Audacity <- used to cut edit audio files open source.<br>
+	apt-get install audacity <br>
+	Thunderbird <- similar to outlook used to send all types of mails<br>
+	GIMP <-image manupulation tool like photoshop <br>
+	yum install gimp <br>
+	Pidgin <- instant messaging tool <br>
+	Blender <- 3D rendering app<br>
+	<br>
+	ssh user@(public ip) <- to connect to our linux<br>
+	passwd <-To change password<br>
+	cat <- to print all contents of a files<br>
+	vncpasswd <-asks for password to connect from vnc <br>
+	after this reboot linux server to reboot you should be root<br>
+	reboot <- restart linux server <br>
+	To view in vnc viewer download and install <br>
+	to connect use publicip:5901 <br>
+	kernel headers yum instal kernal-devel<br>
+	gcc compilers yum install gcc*<br>
+	guest editions goto devices on virtul box and click it.<br>
+	yum install firefox <- firefox
+	</div>
+	<h2> Server Application</h2>
+	<ul><li>Apache</li><li>MySQL</li><li>MONO</li><li>CUPS</li>
+	<li>POSTFIX</li></ul>
+	<h3>Network protocols</h3>
+	<table>
+	<tr><th>port#</th><th>protocol</th><th>server apllication</th></tr>
+	<tr><td>22</td><td>ssh</td><td>OpenSSH</td></tr>
+	<tr><td>23</td><td>TELNET</td><td>telnetd</td></tr>
+	<tr><td>25</td><td>SMTP</td><td>Postfix,sendmail</td></tr>
+	<tr><td>53</td><td>DNS</td><td>Bind,named</td></tr>
+	<tr><td>67</td><td>BOOTP</td><td>dnsmasq,dhcpd</td></tr>
+	<tr><td>80</td><td>HTTP</td><td>Apache</td></tr>
+	<tr><td>443</td><td>HTTPS</td><td>Apache</td></tr>
+	</table>
+	
+	<h3> Mobile Apps (Android)</h3>
+	<h2> development Languages</h2>
+	compiled languages (java)
+	interpreted languages (jscript,phyton,PHP,Ruby)
+	Assembly languages<br>
+	
+	<h2 class="hh1" onclick="toggle_visibility('d4')">Packagemanagement</h2>
+<div id="d4"><h3>RPM</h3>
+	CENTOS
+	Fedora
+	RedHat
+		textmode YUM GUImode YUMEX
+	Suse Enterprise
+	openSUSE
+		textmode zyper GUImode YAST
+	Mandriva 
+		textmode urpmi GUImode RPMDRAKE 
+	<h3>Debian</h3>
+	Debian
+	Ubuntu
+	<h3>pacman</h3>
+	Arch
+	<h3>tarballs</h3>
+	Slackware
+	<h3>ebuild</h3>
+	Gentoo<br>
+	<h2>software repositories</h2>
+<h3>apt-get</h3>
+<pre>	sudo su -
+	vi /etc/apt/sources.list <-you can edit and add repository
+	apt-get update <-updating all the repositories
+	apt-cache search nginx <-searching nginx in the cache 
+	apt-get install nginx <-installing nginx
+	which nginx <-where it is installed
+	apt-cache search apache2
+	apt-get install apache2
+	if port collide 
+	apt-get remove nginx  
+	apt-get remove --purge nginx or
+	apt-get autoremove <-to remove unnecessary libs 
+	apt-get upgrade <-updates all packages
+	apt-get dist-upgrade <-distribution upgrade </pre>
+<h3>dpkg</h3>
+<pre>	used to install .deb files
+	wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.0_amd64.deb 
+ 	mv downloadedfilename dropbox.deb <- to rename downloaded file 
+	dpkg dropbox.deb <-will try to install willn't install dependencies
+	apt-get update <-to update repositories
+	apt-get -f upgrade <- to upgrade source.list f for fix
+	dpkg --get-selections <-will show all the packages installed
+	dpkg --get-selections |grep dropbox <-to check specific package installed
+	dpkg --remove dropbox <-removes all files but doesnot delete configuration files 
+	dpkg --purge dropbox </pre>
+<h3>RPM</h3>
+<pre>	yum remove nano <-to uninstall nano 
+	rpm -ihv nano-2.2.6-1.x86_64.rpm <-(i install,h shows progress,v verbous print on screen)
+	whereis nano <- to see all the locations it installed
+	rpm -q nano <-(q query)
+	rpm -qi nano <-(qi query and information)
+	rpm -e nano <- (e uninstall)
+	rpm -qR nano <- (qR required dependencies of nano)</pre>
+<h3>YUM</h3>
+<pre>	cd /etc/yum.repos.d/ <- different from apt-get
+	yum update 
+	yum search apache2 <-apache doesn't exit renamed as httpd
+	yum search httpd 
+	yum install httpd:x86_64 <-to install apache2
+	yum check-update httpd
+	yum upgrade 
+	yum deplist httpd <- to see dependency list
+	yum remove httpd <- to remove package 
+	yum clean packages
+	yum clean all <-to clear all temp </pre></div>
+<h2 class="hh1" onclick="toggle_visibility('d5')">Shell</h2>
+<div id="d5">
+<pre>	sh bourne shell
+	bash bourne again shell
+	csh C shell
+	tsch tsch shell
+	zsh Zshell
+	ksh korn shell
+	CASE sensitive
+	echo $SHELL <-to show which shell we are using
+	yum install zsh <- to install zsh
+	zsh <- to change to zsh shell
+	ctrl+alt+f1 to f6 <- to open multiple sessions
+	ls <-list
+	ls -a <-show all files hidden with .filename
+	ls -l <-to know more information, long listing
+	ls -p <-to shows folders
+	ls -R <- recurly display all directory and its sub directories
+	ls /var/log <-absolute path of /var/log and list of files
+	ls -R |more <-shows page by page 
+	echo $PATH <- to see current path
+	pwd <- print working directory
+	/home/user/test.sh <- use full path to execute a file
+	./test.sh <- use PATH to execute
+	halt <-shutsdown os only root can do
+	reboot <- only root can do
+	init 0 <-halt root only
+	init 6 <-reboot root only
+	shutdown --help <-gives you all the options availble in shutdown command
+		-H <-halt
+		-P <-power off
+		-r <-reboot
+		-h <-poweroff
+		-k <- send warnings
+		-c <- cancel shutdown
+	exit <- terminates current sessions and processess
+	su <-switch user
+	su yuva <-switch to yuva
+	su - <- switch to root user
+	env <-environment variables
+	top <- show of apps running on system
+	clear <-clear our screen
+	which (any command)<- app path
+	whoami <-username as current user
+	netstat <-network status
+	route <- view routing table
+	ifconfig <-show us net configurations
+	ip addr <-all ip addressess
+	uname <- info about system
+		-s <- kearnwl namre
+		-n host name
+		-r  kernel release number
+		-v verson number
+		-m hardware arcchitecture
+		-p processor type
+		-i hardware platform
+		-o OS
+		-a total info abt kernel
+	cat .bash_history <- history of all previous commands
+	export HISTFILESIZE=99999 <-change history file size 
+	echo $HISTFILESIZE <-show file size
+	te(tab) <-complete remaining part of file(test)
+	te(tabtab) <- gives us all possible file names start with te
+	cd name1 <- takes to directory
+	cd /cd ~ <-home directory
+	cd .. <- one step back
+	cd ../.. <-two step back 
+	cat /etc/bashrc <-contains environmental variables and user specific function 
+	bash_logout <- user specified preferences only called when logging out
+	bash_profile
+	cat /etc/profile 
+	touch .testfile.txt <- creates hidden file
+	mkdir .testfolder <-hidden folder
+	mkdir name1 <- creates directory
+	-m <-set mode 
+	-p dir1/dir2 <- force to create nested directories
+	rmdir <-remove directory
+	rmdir dir1 <- deletes when empty
+	rm -rf dir1/ <- removes all files and directory
+	touch -d "january 1 2013" dir1 <-touch to update timestamp of directory
+	cp -r dir1 <- use recursive to copy directory
+	touch file1 <- creates file and updta timestamp of file
+	-c <- not to create new file
+	-d  "february 1 2015" filename <- to change time stamp
+	cp file.txt file1.txt <- copy files
+	cp file.txt directory 
+	cp file.txt newdir1/newfilename.txt
+	-f fource to overwrite
+	-i interactive ask before overwrite
+	-p preserving ownership of original file
+	-R -r recursivly
+	-a archive also preserves
+	-u update 
+	mv <-move command
+	mv file.txt file2.txt <-renames
+	mv file.txt directory 
+	mv file.txt directory/newfile.txt <-move and rename
+	rm <-remove
+	rm file.txt
+	rm file1.txt file2.txt file3.txt <-removes multiple files
+	</pre></div>
+	<h3>environment and user defined variables</h3>
+	<table border="1">
+	<tr><th>Env Variables</th><th>Default Values</th></tr>
+	<tr><td>BASH and SHELL</td><td>/bin/bash</td></tr>
+	<tr><td>CPU</td><td>spec to your system</td></tr>
+	<tr><td>DISPLAY</td><td>the local video card monitor</td></tr>
+	<tr><td>ENV</td><td>/etc/bash.bashrc</td></tr>
+	<tr><td>EUID</td><td>the UID number of current user</td></tr>
+	<tr><td>HISTFILE</td><td>1000</td></tr>
+	<tr><td>HOME</td><td>current user home directory</td></tr>
+	<tr><td>HOST and HOSTNAME</td><td>system assigned hostname</td></tr>
+	<tr><td>LOGNAME</td><td>username of current user</td></tr>
+	<tr><td>MAIL</td><td>/var/spool/mai/username OR /var/mail/username</td></tr>
+	<tr><td>MANPTH</td><td>distribution dependent</td></tr>
+	<tr><td>OLDPWD</td><td>prior current directory</td></tr>
+	<tr><td>OSTYPE</td><td>Linux</td></tr>
+	<tr><td>PATH</td><td>distrubution dependent</td></tr>
+	<tr><td>PSI</td><td>distribution dependent</td></tr>
+	<tr><td>PWD</td><td>dependes on current directory within</td></tr>
+	<tr><td>USED and USERNAME</td><td>username of the current user</td></tr>
+	</table>
+<pre>	env <- shows all variables
+	set <-same as env in order
+	variable = value <-creates a new variable adds variable
+	PATH=$PATH:/var/opt/  <- it append /var/opt/ folder to existing path (lost when reboot)
+	export PATH <- now path is avai to all users (lost when reboot)
+	vim .bash_profile and add at the end of path :/var/opt/ <-will avai everytime (only current user)
+	vim /etc/profile and add path <- to avail to every user (not good idea)
+	vim /etc/bashrc and add path <-to avail to every user 
+	user defined
+	var="yuva"
+	echo $var
+	export var <- to avail all users
+	all caps,no digit at start </pre>
+	<h3 class="hh1" onclick="toggle_visibility('d6')">Globbing</h3> <-global commands regex searching
+<div id="d6"><pre>	ls *.txt <-all files with .txt
+	ls test* <-all files start with test
+	ls ?.txt <-? is replaced by 1 character
+	ls [F]*.txt <-display files start with F and .txt 
+	ls f[igh][lfz].txt <-first letter is f and second is one of i/g/h and third is l/f/z
+	ls [A-Za-z].txt</pre></div>
+	<h3 class="hh1" onclick="toggle_visibility('d7')">Quoting</h3> 
+<div id="d7"><pre>	double quote echo "Username is $USER" <-Username is yuva
+	single quote echo 'username is $USER' <-username is $USER
+	backslash (escape character) echo "\$5.00" <-$5.00 else .00 
+	wc -w <-testfile.txt <-returns number of words enter witout -
+	echo "did you know `wc-w <-testfile.txt` number of words in testfile.txt" <- ` means there is command to execute
+	ls \
+	-al       <-same as ls -al, \ allows to enter parameters in next line.
+	echo -e 
+	parameters with dash - optional
+	parameters with no dash are arguments
+	("command" "option" "arguments") is format of a complete command</pre></div>
+	<h2>MAN Pages</h2>
+	man cp <-man is a collection documents to help  
+	man 5 passwd <-man has 9 chatogories 
+	whatis passwd <- to know basic man info abt passwd
+	apropos man <- shows all file that contain passwd
+	man -k passwd <- same as apropos 
+	man pages
+	<ul><li>name</li><li>synopsis</li><li>Description</li><li>options</li>
+	<li>Files</li><li>See Also</li><li>Bugs</li><li>Histoy</li><li>Author</li></ul>
+	less key <-man flags info
+	info pages <-similar to man pages
+	info cp <- tolearn abt cp
+	README files <-readme.txt
+	rpm -ql passwd |grep doc <-to see info abt passwd 
+	rpm -ql yum |grep README <-to see readme file in yum packages
+	find /usr/share/doc -name "*passwd*"
+	locate passwd
+	whereis passwd
+	<h2> Archive and compress</h2>
+	Tar <- archive files tapearchive
+	tar -cf ftar.tar dir1 <-to create new tar
+	tar -cf ftar.tar file.txt file3.txt 
+	tar -xf ftar.tar <- extract file
+	gzip,bzip2,zip
+	gunzip,bunzip,unzip
+	zip zipfile.zip file.txt
+	unzip zipfile.zip
+	zip -r zipfilder.zip dir1 <-should recursive
+	unzip zipfolder.zip
+	gzip ftar.tar <- it compress thr tar file give.gz extension
+	gunzip ftar.tar.gz
+	tar -xvf ftar.tar 
+	bzip2 ftar.tar <-compress and .bz2 extension
+	bunzip ftar.tar.bz2
+	tar -zcf <-(gzip) .tgz or .tar.gz
+	tar -jcf  <-(bzip2)to compress using tar
+	tar -zxvf <-(gunzip)
+	tar -jxvf <-(bunzip2) to uncompress using tar
+	<h3>Searching and extracting data from files</h3>
+	<ul><li>cat</li><li>less</li><li>more</li><li>head/tail</li><li>find</li>
+	<li>grep</li><li>sort</li><li>cut</li><li>wc</li></ul>
+<pre>	cat file.txt <-shows all the data
+	head /var/log/messages <-shows first 10 lines
+	tail /var/log/messages <-shows last 10 lines
+	find . <- searches and find all the files (. means this directory)
+	find . -type d <-find directory types only 
+	find . -type f <-find only files
+	find . -name "f*" <- to find by name 
+	grep search_expression filname <-syntax
+	grep DHCP /var/log/messages <- searches for DHCP in messages file
+	grep -i dhcp /var/log/messages <- i ignores case sensitive
+	grep -in dhcp /var/log/messages <- n show line number to alter later
+	sort filename.txt <-sorts all line in alpha order
+	sort -r filename <- in reverse order
+	sort -n filename <- sorts in numerical 
+	cut -c2-4 filename <- return column 2 to 4 in every row
+	cut -c2,4 filename <- return only 2 and 4 in every row
+	cut -d " " -f2 filename <- d uses " " delimiter  f for field no space btw d &" "
+	cut -d " " -f2- filename <- return everything after 2 field
+	wc filename <- all statistics 
+	wc -w filename <- number of words
+	wc -c filename <-characters </pre> 
+	<h4>bash file Descritors</h4>
+<pre>	stdin <-input
+	stdout <-output
+	stderr <-error
+	find . -type f | grep file <- first is input to second 
+	cat filename | grep aa | grep b <-second is input to third
+	cut -d " " -f3 filename | cut -c2 <- second works output of first
+	wc -w filename |cut -d " " -f1 <-shows first field of o/p of wordcount
+	tail /var/log/messages 1> logtemp.txt <- direct o/p to new file, 1 is o/p
+	cat filenamebun 2> logtemp.txt <- irect error to newfile, 2 error
+	ps >> logfile <- ">>" to append if file exist 
+	cat filename 1> temp 2> err <- if error send to err file else temp
+	tail < /var/log/messages <- giving input </pre>
+	<h4> Regular Expressions</h4>
+<pre>	*
+	. <-any single character
+	?
+	^ <-start
+	$ <-end 
+	[nnn] <-matches
+	[^nnn] <-don't matches
+	[n-n]
+	[1-10]
+	[ser] <- searches individually s,e,r </pre>
+	<h4>Text Editors</h4>
+<pre>	gedit
+	kate
+	nano
+	nano filename <-creates new file, will not store if not saved
+	ctrl + K cut line
+	ctrl + X save
+	ctrl + U uncut (paste)
+	vim or vi
+	vi filename <- creates file
+	i,INSERT(btn),S,O,A insert
+	esc exit insert mode
+	:w save
+	:w newfilename <-to save with diff name
+	:q quit
+	:exit writes and quit 
+	:q! force quit
+	:w! overwrite the file
+	:e! brought back all changes back like undo
+	dw delete entire word including space
+	de delete word not space
+	dd delete entire line
+	p paste what is deleted
+	/word <-searches word
+	n next 
+	QQ save and quit </pre>
+	<h4>Shell Scripting</h4>
+<pre>	requirement 
+	/bin/bash or/bin/sh 
+	#! <-(shebang) first line tells whish script we are using
+	/bin/bash bourne again shell
+	variables
+	arguments
+	echo
+	for
+	if
+	exit
+	&& AND
+	|| OR
+	cmd1 && cmd2
+	cmd1 || cmd2
+	#cmd1&&cmd2||cmd3 <-condition ? : ;
+	if condition then
+		command
+	else
+		command
+	fi <-end if 
+	-d directory
+	-e file exist
+	-f file exist but regular
+	-G file exist owend by specific group
+	-h or -L file exist but symbolic link
+	-O file exit owed by specific UID
+	-r read permission
+	-w write permission
+	-x execute permission
+	looping Structures
+	whileloop untilloop forloop 
+	while condition
+	do
+		command
+	done
+	
+	until condition 
+	do 
+		command
+	done
+	
+	for i in 'seq 15'
+	do
+		command
+	done
+	exit 0 
+	seq 15 <- start wit 1 and increment by 1 till 15
+	seq 5 15 <-starts with 5 increment by 1 end at 15
+	seq 5 2 15 <- starts at 5 increment by 2 end at 15
+	seq 5 2 14 <- infinite loop 
+	vi firstscript.sh
+	#!/bin/bash
+	#say hello world <-comments
+	chmod +x firstscript.sh <-permision to execute</pre>
+	
+	<h4> Processess </h4>
+<pre>	ps -u username --forest <- gives process of usernamr and parent child processs relationship
+	ps u U username <- much more info 
+	ps aux <-user name who using that process
+	ps ax |grep vim <- to search for specific process vim
+	top <-system summary info 
+	h <-question
+	k <-kill process asks for pid
+	r <-pid priority
+	p <-sorts by cpu usage time
+	m <-sorts by memory usage
+	free <-report on total memory status(ram)
+	-h <-human redable measurements </pre>
+	<h4>Logging,syslog,klog,dmesg</h3>
+<pre>	var directory contains logs 
+	cron scheduling services
+	gdm gnome display folder 
+	syslog or meaasge contains general purpose logs
+	secure logs 
+	dmesg <- dynamic logs kernel ring buffer
+	dmesg |less <-dynamic simlar to log files </pre>
+	<h4>INTERNET, NETWORK </h4>
+	<ul><li>Domain controller</li><li>Database server</li><li>DHCP Server</li>
+	<li>Web Server</li><li>E-Mail Server</li><li>file and print Server</li>
+	<li>Packet-filtrinr,stateful,application level firewalls</li><li>Proxy Server</li>
+	<li>Content Filter Server</li><li>Router</li></ul>
+<pre>	TCP-transfer control protocol is used in Web Servers, Email Servers, FTP Servers
+	UDP-User Dtagram Protocol used in VoIP, Streaming 
+	ICMP-Internet control message Protocol testing and verifying network
+	Ports-0-65536 to provide multiple services through single IP
+	range 0-1023 genenral ports </pre>
+	<table>
+	<tr><th>Port</th><th>Service</th></tr>
+	<tr><td>20 and 21</td><td>FTP, SSH</td></tr>
+	<tr><td>23</td><td>Telnet</td></tr>
+	<tr><td>25</td><td>SMTP</td></tr>
+	<tr><td>80</td><td>HTTP(webservice)</td></tr>
+	<tr><td>110</td><td>POP3</td></tr>
+	<tr><td>137,138,139</td><td>NetBIOS</td></tr>
+	<tr><td>443</td><td>HTTPS</td></tr>
+	</table>
+<pre>	range 1024-49151 registered ports
+	range 49152-65535 Dynamic Ports 
+	private IP address ranges
+	10.0.0.0-10.255.255.255 -calss A
+	172.16.0.0-172.31.255.255 -class B 
+	192.168.0.0-192.168.255.255 -class C 
+	subnet Mask
+	255.255.255.0 -(255 netwoork,0 node)
+	first 3 network should be same all around single network
+	last 1 is node
+	Class A subnet 255.0.0.0 (ip first octet 1-126) 
+	Class B subnet 255.255.0.0 (ip first octet 128-192)
+	Class C subnet 255.255.255.0 (ip first octet 192-223)
+	subnet shorthand 192.168.1.1/24=192.168.1.1 255.255.255.0 </pre>
+	<h4>DNS and Default Gateway(Netwrok Router)</h4>
+<pre>	bind-utils install package
+	dig tool -resolve webdomains into their ip address
+	dig www.google.com <-gives ip address of google domain names </pre>
+	<h4>Network Configuration</h4>
+<pre>	ping <-testing connectivity of a remote network
+	dig <-allows us to lookup ip address for DNS
+	netstst <- list network connections , routing info,NIC info
+	route <-current route/net settings
+	traceroute <-Traces the route a packet takes
+	ifconfig <-current net settings
+	ip addr current ip addredd and net settings 
+	/etc/resolv.conf <-DNS server info is stored
+	ping www.google.com
+	ping 54.165.200.94
+	route <- show default gateway
+	/etc/sysconfig/network-scripts/ifcfg-eth0 <-network configuration
+	static assign ip address
+	BOOTPROTO="static"
+	IPADDR="10.10.30.210"
+	NETMASK="255.255.255.0"
+	NETWORK="10.10.30.0"
+	route add -net netwrok_address netmask subnetmask gw Router_address
+	route add -net 10.10.10.0 netmask 255.255.255.0 gw 10.10.30.1
+	route del -net 10.10.40.0 netmask 255.255.255.0 gw 10.10.30.1
+	route add default gw 10.10.30.1 
+	troublshoot
+	netstat -a <-all networks listening and non listening
+	-i <-network interfaces
+	-l <-listening sockts
+	-s <-summary 
+	-r <-routing table (route)
+	traceroute destip
+	traceroute www.google.com  </pre>
+	<h4>Root and standard users</h4>
+<pre>	echo path
+	to run executable should be in path directories
+	finger util <- to view infoon user accounts on file system 
+	yum instal -y finger
+	finger username 
+	id username <- find userid and group id
+	-u username <- show only uid
+	-g <- groupid
+	-G <-other groups member of
+	-Gn <- current group
+	groups username <- groups the user member of
+	localfilesystem
+	/etc/paswd <- user account info 
+	/etc/shadow <- stores password
+	/etc/group <-group info
+	pwck <-util to verify sync btw passwd and shadow
+	pwconv <-run through and add missing users in shadow file compare wtih passwd file
+	su - <- to change to root user
+	su - username <- to change to another username
+	sudo <- works one command at a time 
+	sudo yum upgrade <- gives root previlages
+	w <- current users ogged on system
+	who <- 
+	-b last boot time-m hostname user asoociate
+	-r run level 
+	-q no of user logged in
+	last username <- last logged details
+	system users <- used by system like halt,sshd etc </pre>
+	<h4>Creating users and groups</h4>
+<pre>	useradd username <- util to add new user
+	default settings
+	/etc/default/useradd <- to see settings and edit 
+	usedadd -D <- same as above
+	/etc/login.defs <- defaults values like shadow file
+	/etc/skel <-directory in skel is copied to new user home
+	-e <- expire date yyyy-mm-dd
+	-f <- inactive after expire date ,-1 disable this option
+	-g <- to add gid
+	-G <- additional groups
+	-M <-to create no home directory
+	-m <- to create home directory
+	-p <-password
+	-r <- system user
+	-s <-default shell
+	-u <- user id
+	useradd -c "yuva" -m -p "password" -s "/bin/bash" username
+	passwd -S username <- show password details
+	passwd username <- asks for new password
+	-l <-lock
+	-u <-unlock
+	-n <-ninimum days before password can change
+	-x <- max days
+	-w <-warning days
+	-i <-inactive
+	usermod <- to change exixting users
+	-e <- expire
+	-f <-inactive 
+	usses all useradd flags
+	-l <-login
+	-L <-lock
+	-m <- new home directory
+	-U <- unlock
+	usermod -l newusername -c "jenifersmith" currentuser
+	userdel username <- to delete users will not delete home directory
+	userdel -r usernamr <- deletes user and all files
+	/etc/group <- contains all groups
+	/etc/gshadow <-group password stored
+	groupadd groupname <- add group name
+	-g <- group id
+	-p <-password
+	-r <- system group
+	groupmod Options groupname <- to modify groups
+	groupmod -g 1010 groupname <- to change group id
+	groupdel groupname <- to delete groups </pre>
+	<h4>Permissions</h4>
+<pre>	permission,user,Group,Other
+	d rwx rwx r-x or 7 means rwx 4+2+1, 6 rw-, 5 r-x, 4 r--, 3 -wx, 2 -w-, 1 --x 
+	d means directory
+	- means file 
+	chmod 777 filename 
+	chmod ugo+w filename <-user group other giving write permission
+	chown username.groupname filename <-giving ownership
+	chmod ugo-w filename <- remove write permission </pre>
+	<h4>Symbolic Links</h4>
+<pre>	creates pointer or shortcut 
+	ln -s filename newfile <- s is symbolic link, now new file points to filename
+	ln -s /etc/syscong/net-scripts/ifcfg-eth0 nic1 <- creates new nic1 and links to large file
+	<b>Sticky bits</b> <- files in sticky folder can be deleted by its owner unlike /tmp folder
+	chmod 0+t /sticky <- to add sticky bit to the folder sticky
+	chmod 0777 /sticky <-to remove sticky bit permission 
+	chmod 1777 /sticky <-to add sticky bit permission </pre>
+	
+	
+	 
+	
+</body>

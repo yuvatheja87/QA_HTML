@@ -1,0 +1,191 @@
+<html>
+<head>
+	<title>ANT</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script src="myscripts.js"></script>
+</head>
+<body>
+<center><h1>ANT</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+<pre>
+<b>INSTALL</b>
+	Prereq Java
+	Download zip file of ANT
+	ADD extractedfile\bin to the path in environmentalvariables
+	ant <- run ant on commandline it will execute build.xml file by default
+	ant -buildfile build2.xml "target2" <-to execute build2.xml and target as target2
+<b>build.xml</b>
+	<textarea rows="14" cols="150" >
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project default="main target" name="antproject">
+		<target name="main target" depends="target2">
+			<echo>executing main target...</echo>
+			<antcall target="target3"/>
+		</target>
+		<target name="target2">
+			<echo>Executing target2....</echo>
+		</target>
+		<target name="target3">
+			<echo>Executing target3....</echo>
+		</target>
+	</project></textarea>
+<b>bat file</b>
+	create new file startbuild.bat
+	ant -buildfile build2.xml "target2"
+	save it
+	now on command line enter startbuild and hit enter
+	this will execute the ant command
+<b>executing in eclipse</b>
+	create a java project in eclipse
+	create an xml file under project build.xml
+	can create a directory(staging) in project to store compiled classes
+	<textarea rows="12" cols="150" >
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project default="run" name="antproject">
+		<target name="run" depends="compile">
+			<java classname="package.classname">
+				<classpath path="staging" />
+			</java>
+		</target>
+		<target name="compile">
+			<javac includeantruntime="false" scrdir="./src" destdir="staging" />
+		</target>
+	</project></textarea>
+	right click on build.xml and run antbuild 
+	to run form commandline 
+	goto project folder and run ant 
+<b>running Junit test</b>
+	while creating project add junit(junit3) library 
+	write the original code and test programm
+	<textarea rows="15" cols="150" >
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project default="test" name="antproject">
+		<target name="test" depends="compile">
+			<junit printsummary="on">
+				<test name="package.testclassname"/>
+				<classpath>
+					<pathelement location="give path of junit3.jar" />
+					<pathelement location="staging"
+				</classpath>
+			</junit>
+		</target>
+		<target name="compile">
+			<javac includeantruntime="false" scrdir="./src" destdir="staging" classpath="give path of junit3.jar"/>
+		</target>
+	</project></textarea>
+<b>war and deploy to JBOSS</b>
+	create dynamicwebproject and targetruntime/jboscommunity=jboss7
+	to install jboss, in targetruntime click additional adaptors and select jbossasTools
+	under source create webfiles directory and create jsp and code
+	<textarea rows="15" cols="150" >
+	<?xml version='1.0' encoding='UTF-8'?>
+	<project default='wartarget' basedir='.' name='antproject'>
+		<property name='jboss' value='jboss directory'/>
+		<property name='jboss.deployment' vslue='${jboss}/standalone/deployments' />
+		<property name='base' value='.'/>
+		<property name='source' value='${base}/src'/>
+		<target name="wartarget">
+			<war warfile="project.war" needxmlfile="false" >
+				<fileset dir="${source}/webfiles" />
+			</war>
+			<antcall target="deploytarget"/>
+		</target>
+		<target name="deploytarget">
+			<copy file="${base}/project.war" to dir="${jboss.deployment}"/>
+		</target>
+	</project></textarea>
+	run the buildfile
+	to execute go to jboss bin folder(commandline)
+	standalone <- it will extract and deploy war file
+	in browser http://localhost:8080/warfilename/file.jsp
+<b>Deploy to Tomcat</b>
+	create project / targetruntime apache tomcat 7
+	create folder in src webfile and create jsp file
+	<textarea rows="20" cols="150">
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project default="wartarget" basedir="." name="antproject">
+		<property name="tomcat" value="tomcat directory"/>
+		<property name="tomcat.development" vslue="${tomcat}/webapps" />
+		<property name="tomcat.bin" vslue="${tomcat}/bin" />
+		<property name="base" value="."/>
+		<property name="source" value='${base}/src'/>
+		<target name="wartarget" >
+			<war warfile="project.war" needxmlfile="false" >
+				<fileset dir="${source}/webfiles" />
+			</war>
+			<antcall target="deploytarget"/>
+		</target>
+		<target name="deploytarget">
+			<copy file="${base/project.war" todir="${tomcat.deployment}"/>
+			<antcall target="starttarget" />
+		</target>
+		<target name="starttomcat">
+			<exec executable="${tomcat.bin}/startup.bat"/>
+		</target>
+		<target name="stoptomcat">
+			<exec executable="${tomcat.bin}/shutdown.bat"/>
+		</target>
+	</project></textarea>
+	in commandline
+	cd to projrct directory
+	ant
+	in browser http://localhost:8080/warfile/demofile.jsp
+	ant stoptomcat <- this will call target stoptomcat
+<b>tomcat with web.xml</b>
+	while creating project check generate web.xml
+	under source create folder metadataFiles 
+	copy web.xml from web-ifo/lib/ 
+	<textarea rows="12" cols="150" >
+	clear data <display-name> tag and below
+	<servlet>
+		<servlet-name>demoservlet</servlet-name>
+		<jsp-file>/demo.jsp</jsp-file>
+	</servelet>
+	<servlet-mapping>
+		<servlet-name>demoservlet</servlet-name>
+		<url-pattern>/demo</url-pattern>
+	</servlet-mapping></textarea>
+	<textarea rows="20" cols="150" >
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project default="wartarget" basedir="." name="antproject">
+		<property name="tomcat" value="tomcat directory"/>
+		<property name="tomcat.development" vslue="${tomcat}/webapps" />
+		<property name="tomcat.bin" vslue="${tomcat}/bin" />
+		<property name="base" value="."/>
+		<property name="source" value='${base}/src'/>
+		<target name="wartarget" >
+			<war warfile="project.war" web.xml="${sourse}/metadatefiles/web.xml">
+				<fileset dir="${source}/webfiles" />
+			</war>
+			<antcall target="deploytarget"/>
+		</target>
+		<target name="deploytarget">
+			<copy file="${base/project.war" todir="${tomcat.deployment}"/>
+			<antcall target="starttarget" />
+		</target>
+		<target name="starttomcat">
+			<exec executable="${tomcat.bin}/startup.bat">
+				<env key="CATALINA_HOME" value="${tomcat}"/>
+			</exec>
+		</target>
+		<target name="stoptomcat">
+			<exec executable="${tomcat.bin}/shutdown.bat">
+				<env key="CATALINA_HOME" value="${tomcat}"/>
+			</exec>
+		</target>
+	</project></textarea>
+	
+	
+	
+</pre>	
+</body>
+</html>

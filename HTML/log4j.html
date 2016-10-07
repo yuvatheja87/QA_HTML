@@ -1,0 +1,98 @@
+<html>
+<head>
+	<title>QA</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>QA</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="selenium.html">SELENIUM</a></li>
+		<li><a href="seleniumgrid-saucelabs.html">Grid&SauceLabs</a></li>
+		<li><a href="junit.html">JUnit</a></li>
+		<li><a href="testng.html">TestNG</a></li>
+		<li><a href="log4j.html">Log4j</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+<pre>Written in Java, Open source tool, anysize of application
+Store the flow details of the selenium tests.
+Download and import jar
+copy and paste log4j.properties file in project
+<b>Components</b>
+	Logger
+	Appender
+	Layout
+<b>Loggers:</b>Create an instance for log4j
+	all	-everything
+	Debug-debuginfo
+	Info-highlights of info
+	warn-
+	error-print error 
+	fatal
+	off
+<b>Appenders:</b> 
+	console appender
+		write report to system.out or system.err
+	file appender
+		write report to a file
+	Rolling file appender
+		writes report to a file, it requires Triggering policy and rollover strategy
+	  Triggeringpolicy
+		sizeBased
+		TimeBased
+		onStartup
+		Cron
+		Composite [size,Time,Onstartup]
+	  Rollover Strategy
+		takes fileindex,min,max and compressionlevel(ZIP 0-9)
+		We can delete or archive on Rollover 
+<b>layout:</b>
+	different styles
+	
+<b>Example:</b>	
+public static void main(String[] args) {
+  Logger log=Logger.getLogger("Log4j_demo");
+  PropertyConfigurator.configure("E:\\QA\\workspace\\git\\Seleniumintro\\log4j.properties");
+  WebDriver driver= new FirefoxDriver();
+  log.info("driver setup sucessfull");
+  driver.get("http://gmail.com");
+  log.info("browser invokred");
+  try{
+	driver.findElement(By.id("mail")).sendKeys("xxxx@xxxx.xxx");
+	log.info("email has entered");
+  }catch(Exception e){
+	log.error("no element has been found with Locator");
+  }
+}	
+
+<b>log4j.properties</b>
+log4j.rootLogger=INFO,CONSOLE,R,HTML,TTCC
+
+log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
+log4j.appender.R=org.apache.log4j.RollingFileAppender
+log4j.appender.TTCC=org.apache.log4j.RollingFileAppender
+log4j.appender.HTML=org.apache.log4j.FileAppender
+
+log4j.appender.R.File=./log/testlog.log
+log4j.appender.TTCC.File=./log/testlog1.log
+log4j.appender.HTML.File=./log/application.html
+log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
+log4j.appender.CONSOLE.layout.ConversionPattern= %5p [%t] (%F:%L)- %m%n
+log4j.appender.R.layout=org.apache.log4j.PatternLayout
+log4j.appender.R.layout.ConversionPattern=%d - %c -%p - %m%n
+log4j.appender.TTCC.layout=org.apache.log4j.TTCCLayout
+log4j.appender.TTCC.layout.DateFormat=ISO8601
+log4j.appender.HTML.layout=org.apache.log4j.HTMLLayout
+log4j.appender.HTML.layout.Title=Application log
+log4j.appender.HTML.layout.LocationInfo=true	
+</pre>
+<h6>ytsn</h6><hr>
+</body>
+</html>

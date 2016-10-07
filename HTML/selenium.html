@@ -1,0 +1,313 @@
+<html>
+<head>
+	<title>SELENIUM</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>SELENIUM</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="selenium.html">SELENIUM</a></li>
+		<li><a href="seleniumgrid-saucelabs.html">Grid&SauceLabs</a></li>
+		<li><a href="junit.html">JUnit</a></li>
+		<li><a href="testng.html">TestNG</a></li>
+		<li><a href="log4j.html">Log4j</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div><pre>
+Opensource - Multibrowser compatible, multi OS 
+selenium editor to webbrowser-communicates in browser native language
+
+Slenium 1.0 RC -Remote Control Server
+Slenium 2.0 Webdriver
+	2.43 safari browser support
+	2.53 current
+	
+Browsers
+	IE,Chrome,Firefox,Safari,Opera-Betaversion
+Languages: c#,Java,python,Perl,Ruby
+
+To identify html Objects
+	firebug,firepath ->firefox
+	chrome inspector ->google Chrome
+	F12 	->Internet Explorer
+
+<b>Connecting to webdriver</b>
+	WebDriver driver = new FirefoxDriver();
+	System.setProperty("webdriver.chrome.driver","E:\\QA\\workspace\\chromedriver.exe");	// to work with chrome
+	WebDriver driver= new ChromeDriver();
+	System.setProperty("webdriver.ie.driver","E:\\QA\\workspace\\IEDriverServer.exe");				
+	WebDriver driver= new InternetExplorerDriver();
+	WebDriver driver= new SafariDriver();  ->Safari download and install plugin in mac
+	WebDriver driver= new HtmlUnitDriver(); ->Headless browser
+	
+	driver.get("http://www.google.com");
+	driver.findElement(By.xpath(".//*[@id='tsf']/div[2]/div[3]/center/input[1]")).click();
+	driver.close();
+	<b>Incase Firefox Fails to load</b>
+	FirefoxBinary ffbinary= new FirefoxBinary(new File("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe"));
+	FirefoxProfile ffprof=new FirefoxProfile();
+	WebDriver driver = new FirefoxDriver(ffbinary,ffprof);
+</pre>
+<h4>Locator Techniques</h4><hr>
+<div class="div1"><pre><b>Xpath</b>
+	Using Attributes
+	.//tagname[@attribute='value']
+	//tagname[@attribute1=’value1’][attribute2=’value2’]
+	Traversing through tagnames
+	Absolute xpath
+	//html/body/tagname1/tagname2/.....
+	Ex:
+		.//input[@name='email']
+		.//*[@name='email']
+		//div[@id='box']/div/div[1]/div[4]/input[1]
+	Regex
+		^ cap startwith
+		$ endwith
+		* contains
+		case sensitive
+	<b>Dynamic Xpath</b>
+	"$x("//input[starts-with(@name,'firstName')]")
+	//tagname[contains(@attribute,'value1')]
+	//input[contains(@id,'')]
+	Xpath/following::again-ur-regular-path
+	//input[@id='']/following::input[1]
+	Xpath/preceding::again-ur-regular-path
+	//input[@id='']/ preceding::input[1]</pre></div>
+<div class="div1"><pre><b>css selector</b>
+	faster than xpath
+	class under class senario can only be done by css
+	tagname[attribute='value'][attribute2='value']
+	you can remove tagname 
+	driver.findElement(By.cssSelector("input[class='input_password']"));</pre></div>
+<div class="div1"><b>Id</b><br>
+		driver.findElement(By.id("email")).sendKeys("xxxxxxxxxxxxx");</pre></div>
+<div class="div1"><b>Classname</b><br>
+		driver.findElement(By.className("inputText")).sendKeys("xxxxxxx@xxxx.xxx");</div>
+<div class="div1"><b>link text</b><br>
+		driver.findElement(By.linkText("Forgot account?")).click();</div>
+<div class="div1"><b>partial link text</b><br>
+		driver.findElement(By.partialLinkText("Forgot")).click();</div>
+<div class="div1"><b>name</b><br>
+		driver.findElement(By.name("pass")).sendKeys("xxxxxxxxxxxx");</div>
+<div class="div1">	<b>To find multiple elements</b><br>	
+	List<WebElement> l1=(List<WebElement>) driver.findElements(By.tagName("a"));<br>
+	l1.size();</div>
+<h4>DropDowns</h4><hr>
+<div class="div1"><b>Static DropDowns</b>
+<pre>	select tag select class
+	select dropdown1= new select(driver.findElement(By.xpath()))
+	select by index
+	dropdown1.index(4)-picks from 0 index
+	select by visibleText
+	dropdown1.visibleText("9Adults")
+	select by value 
+	dropdown1.value(3)-picks according to values</pre></div>
+<div class="div1"><b>Dynamic DropDowns</b>
+<pre>driver.findElement(By.xpath(".//*[@id='top_content']/a")).click();
+Thread.sleep(1500L);
+int count1=driver.findElements(By.xpath(".//*[@class='ui-menu-item']")).size();
+for(int i=0;i count1;i++){
+  String str1=driver.findElements(By.xpath(".//*[]/a")).get(i).getAttribute("innerText");
+  String str1=driver.findElements(By.xpath(".//*[]/a")).get(i).getText();
+  if(str1.contains("(BOM)")){
+	driver.findElements(By.xpath(".//*[@class='ui-menu-item']/a")).get(i).click();
+	break;
+  }	
+}</pre></div>		
+<div class="div1"><b>CheckBox</b>
+<pre>if(!driver.findElement(By.xpath("//*[@id='ctl00_mainContent_chk_IndArm']")).isSelected())
+	driver.findElement(By.xpath("//*[@id='ctl00_mainContent_chk_IndArm']")).click();</pre></div>
+<div class="div1"><b>RadioButtons</b>
+<pre>int count=driver.findElements(By.xpath("//input[@name='group1']")).size();
+for(int i=0;i count;i++){
+  String text=driver.findElements(By.xpath("//input[]")).get(i).getAttribute("value");
+  if(text.equals("Milk")){
+	driver.findElements(By.xpath("//input[@name='group1']")).get(i).click();
+	System.out.println(driver.findElements(By.xpath("//")).get(i).getAttribute("value"));
+  }
+}</pre></div><h6>ytsn</h6><hr>
+
+<div class="div1"><b>Handling Ajax/Mouse interactions</b>
+<pre>	Action Class like hover-move to element ,right click -> context click 
+	drag and drop, .build().performe() are madatory actions.
+
+Actions abc = new Actions(driver);
+WebElement ele1=driver.findElement(By.xpath(".//*[@id='nav-link-yourAccount']"));
+abc.moveToElement(ele1).build().perform();
+Thread.sleep(1500L);
+WebElement ele3= driver.findElement(By.linkText("Customer Service"));
+abc.moveToElement(ele3).contextClick().build().perform();
+Thread.sleep(2000L);
+//	driver.findElement(By.xpath(".//*[@id='twotabsearchtextbox']")).sendKeys("laptops");
+WebElement ele2= driver.findElement(By.xpath(".//*[@id='twotabsearchtextbox']"));</pre>
+abc.moveToElement(ele2).click().keyDown(Keys.SHIFT).sendKeys("mac book ").keyUp(Keys.SHIFT).sendKeys("pro").build().perform();
+</div>	
+<div class="div1"><b>Handling Java Popups/alerts</b>
+<pre>if(driver.switchTo().alert().getText().equals("Hello from JavaScript!"))
+	driver.switchTo().alert().accept();   	// to accept or positive response
+else
+	driver.switchTo().alert().dismiss();	// to give negative response
+When random popup appears
+1) use .size() method while loading page for first time.
+2)try{
+	driver.switchTo().alert().accept();
+}catch(Exception e){
+}</pre></div>
+<div class="div1"><b>Assertions</b><br>
+	Assert.assertTrue(condition);<br>
+	Assert.assertFalse(condition);<br>
+	</div>		
+<div class="div1"><b>Handling Multiple Windows/Tabs</b>
+<pre>	Set<String> st=driver.getWindowHandles();
+	Iterator<String> itr1=st.iterator();
+	String parentid=itr1.next();
+	String childid=itr1.next();
+	driver.switchTo().window(childid);</pre></div>
+<div class="div1"><b>Handling Table Grids</b>
+Table unique ID,Tagname locator,Finding rows,finding columns, data and Extracting cell values
+</div>
+<div class="div1"><b>Taking Screen shot</b><br>
+File scrfle=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);<br>
+FileUtils.copyFile(scrfle,new File("E:\\Downloads\\Screenshot.png"));
+</div>
+<div class="div1"><b>Handling Frames</b>
+<pre>	driver.switchTo().frame(0);
+	Thread.sleep(1500L);
+	driver.findElement(By.cssSelector("input[class='input_password']")).sendKeys("124");
+	driver.findElement(By.cssSelector(".lForm>tbody>tr>td>a")).click();
+	driver.switchTo().defaultContent();
+	To Know frame are used in a website get page source
+	developer writes frames as iframe or frameset tags
+	if iFrame then id is provided
+	for frameset search for frame that our requirement</pre>
+<pre>Finding Frame number
+	driver.findElement(By.xpath("email")).sendKeys("aa");
+	wb.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("vuviubon")));	
+	driver.findElement(By.xpath("hyihbj")).click();		//dynamic dropdown
+	int number=findframenumber(driver,By.xpath("savjnadivjn"));	//getting iframe number
+	if(number>=0){
+	driver.switchTo().frame(number);
+	driver.findElement(By.xpath("savjnadivjn")).click();
+	driver.switchTo().defaultContent();
+	}
+Reusable method	
+public static int findframenumber(WebDriver driver,By by){	
+	int fnum=driver.findElements(By.tagName("iframe")).size();
+	for(i=0;i fnum;i++){
+		driver.switchTo().frame(i);
+		int count=driver.findElements(by).size();
+		if(count>0){
+			driver.switchTo().defaultContent();
+			return i;
+		}
+		driver.switchTo().defaultContent();
+	}
+	return -1;
+}
+</pre></div>
+<div class="div1"><b>Handling WebControls</b>
+<pre>	Dynamic Frames,Dynamic dropdowns
+	use wait times Thread.sleep(5000L),implicit wait time,
+	fluent wait time, explicit wait time</pre>
+	<b>Implicit Wait:</b>
+	we can tell Selenium that we would like it to wait for a certain amount of time before throwing an exception that it cannot find the element on the page. We should note that implicit waits will be in place for the entire time the browser is open. This means that any search for elements on the page could take the time the implicit wait is set for.
+<pre>driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+driver.get("http://url_that_delays_loading");
+WebElement myDynamicElement = driver.findElement(By.id("myDynamicElement"));
+</pre>
+<b>Explicit Wait:</b>
+you can set it up to wait for any condition you might like. Usually, you can use some of the prebuilt ExpectedConditions to wait for elements to become clickable, visible, invisible, etc.
+<pre>WebDriverWait wait = new WebDriverWait(driver, 10);
+WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("someid")));</pre>
+<b>Fluent Wait:</b>
+Each FluentWait instance defines the maximum amount of time to wait for a condition, as well as the frequency with which to check the condition. Furthermore, the user may configure the wait to ignore specific types of exceptions whilst waiting, such as NoSuchElementExceptions when searching for an element on the page.
+<pre>Wait wait = new FluentWait(driver)
+   .withTimeout(30, SECONDS)
+   .pollingEvery(5, SECONDS)
+   .ignoring(NoSuchElementException.class);
+  WebElement we1 = wait.until(new Function() {
+    public WebElement apply(WebDriver driver) {
+    return driver.findElement(By.id("foo"));
+    }
+   });</pre>
+</div>
+<div class="div1"><b>Data Driven from Excel</b>
+<pre>Download Apache POI jars 
+public class ExcelDriven {
+  public static FileInputStream files;
+  public static XSSFWorkbook wb;
+  public static XSSFSheet sheet;
+  public static XSSFRow row;
+  public static XSSFCell cell;
+  public static void main(String[] args) throws IOException {
+    String value = getcelldata(0,2);
+	System.out.println(value);
+	value = setcelldata(1,2,"yuva1");
+	System.out.println(value);
+  public static String getcelldata(int rownum,int cellnum) throws IOException{
+	files = new FileInputStream("E:\\QA\\workspace\\git\\Seleniumintro\\data.xlsx");
+	wb = new XSSFWorkbook(files);
+	sheet= wb.getSheet("script");
+	row=sheet.getRow(rownum);
+	cell=row.getCell(cellnum);
+	//wb.close();
+	return cell.getStringCellValue();
+  }
+  public static String setcelldata(int rownum,int cellnum,String data) throws IOException{
+    files = new FileInputStream("E:\\QA\\workspace\\git\\Seleniumintro\\data.xlsx");
+    wb = new XSSFWorkbook(files);
+    sheet= wb.getSheet("script");
+    row=sheet.getRow(rownum);
+    cell=row.getCell(cellnum);
+    cell.setCellValue(data);
+    FileOutputStream os = new FileOutputStream("E:\\QA\\workspace\\git\\Seleniumintro\\data.xlsx");
+      wb.write(os);
+    return cell.getStringCellValue();
+  }
+}</pre></div>
+<div class="div1"><b>Managing Driver</b>
+<pre>driver.manage().deleteAllCookies();	// deleting cookies
+Set<Cookie>abc=driver.manage().getCookies();	//getting cookies
+System.out.println(abc.size());
+driver.manage().window().maximize();	//maximize window
+</pre></div>
+<div class="div1"><b>Handling Http Certificates</b>
+<pre>in firefox
+	FirefoxProfile prof=new FirefoxProfile();		//to avoid htpps certifications
+	prof.setAcceptUntrustedCertificates(false);
+	WebDriver driver = new FirefoxDriver(prof);
+in Chrome & IE 
+	they have code inbuilt in these drivers.</pre>
+</div> 
+<div class="div1"><b>Killing Event on TaskBar</b><br>
+	Windows.Utils.tryToKillByName("notepad.exe");
+</div>
+<div class="div1"><b>Limiting DriverScope</b>
+when you are searching elements only in certain block (footer,header,div), then we should limit driver to that portion of code to increase performance
+<pre>WebDriver driver = new FirefoxDriver(ffbinary,ffprof);
+  //WebDriver driver=new FirefoxDriver();
+  driver.get("http://www.ebay.com/");
+  WebElement footer = driver.findElement(By.xpath(".//*[@id='glbfooter']"));
+  WebElement footer1 = driver.findElement(By.xpath(".//*[@id='gf-BIG']/table/tbody/tr/td[2]/ul"));
+  for(int i=0;i footer1.findElements(By.tagName("a")).size();i++){
+	if(footer1.findElements(By.tagName("a")).get(i).getText().equals("Site map")){
+		footer1.findElements(By.tagName("a")).get(i).click();
+		break;
+	}
+  }
+  if(driver.getTitle().equals("Sitemap | eBay"))
+	System.out.println("page sucessfully changed to "+driver.getTitle());
+
+  driver.close();</pre>
+</div>
+<h6>ytsn</h6><hr>	
+
+</body>
+</html>

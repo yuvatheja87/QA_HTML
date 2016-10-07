@@ -1,0 +1,226 @@
+<html>
+<head>
+	<title>GIT</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>GIT(HUB)</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+	Version Control<br>
+	Git Commands <a href="https://confluence.atlassian.com/bitbucketserver046/git-resources/basic-git-commands">Click here</a>
+	<h3>Installing GIT</h3>
+<pre>	sudo yum install git
+	git --version <- gives version
+	git config --global user.name "root user"
+	git config --global user.email "root@localhost" <-creates a .gitconfig file and adds user name and email
+	git config --list <- to look at above file</pre>
+	<h3> configuration</h3>
+	3 type of system level config 
+	<ul><li>system config <-to the system,least specific</li>
+	<li>global config <- to current user </li>
+	<li>local config <-to a particular repo,this overwrite global</li></ul>
+<pre>	cat /etc/gitconfig <-system config
+	git config --system system.name "Git repo server 1" <- creates .git config in /etc/
+	git config --global system.name "git repo new server" <- this will overide the config created above, but will not erase the above
+	cat .gitconfig <- to see git config
+	git config --global core.editor vim <- add vim editor to git client 
+	git config --global core.pager 'more' 
+	git config --global core.template "" <- creates a standard template 
+	vim .gitignore_global <- create file, add all the file types to ignore when git commands execute, don't add .git folder
+	*~ <-ignore ~ at the end
+	.DS_Store <- .DS_Store is ignored
+	git config --global core.excludesfile ~/.gitignore_global</pre>
+<h3>creating Repository</h3>
+<pre>	mkdir gittest <- create a directory to make it repo
+	cd gittest <- change to that directory
+	git init <-creates a .git directory and config files and it is repo
+	rm -rf .* <- deletes all the repo 
+	cd .git <- change to .git directory
+	git status <- tell the status 
+	echo "this is my first file" >test.txt <- it creates a untracked file in git repo
+	git add test.txt <- adds the test.txt to git repo but not commited
+	git commit <- it commits the test.txt file into repo and can add some discription to it
+	if the gittest directory had any data previously
+	then when git init is performed it will add the file under untracked files
+	this can be seen by git status command
+	git add * <- it will add all file in untracked to repo but not commit
+	git commit <- to commit files and add comments</pre>
+<h3>How to work with local repo</h3>
+<pre>	mkdir source
+	cd source
+	git init 
+	add the source file to source directory
+	git add * <- to add all files
+	git add build <- to add individual file 
+	git status
+	git commit -m "this is the initial source code checkin" <- -m to give comments
+	rm filename <- to remove file in directory not repo
+	git rm filename <- to remove from repo
+	git commit <- to commit repo
+<b>Git ignore</b>
+	vim .gitignore
+	*.mf <- ignores all .mf files</pre>
+<h3>Cloning</h3>
+<pre>	3 three ways of cloning
+	<b>Locally</b>
+	1)
+	cp -rf gittest/ repo2 <- creates new repo directory of exixting repo
+	disadvantage - new repo is not linked to original any change cann't be pushed or commit to original repo
+	rm -rf repo2
+	2)
+	git clone gittest/ repo3 <- creates repo3 and copies gittest we don't have .mf as we ingnore
+	cd repo3
+	echo "this is new file" > testfile 
+	git status
+	git add testfile
+	git commit -m "new file added" <- commited to repo3 not gittest
+	from original repo
+	git pull ../repo3/
+	from repo3
+	git push <- push should be done after pull
+	<b>Remotly(SSH)</b>
+	we use private ip address to connect to
+	ssh-keygen <- generates private and publickeys pair
+	ssh-copy-id user@privateip <-ask for password and copies the ssh key
+	ssh privateip <- to verify the connection
+	git clone user@privateip:pathofrepo(/home/user/gittest/) localrepo <-connects and pulls down all the file to localrepo</pre>
+<h3>Tagging</h3>
+<pre>	tags and branches are similar but different
+	cd gittest <- original repo
+	2 types of tags
+	git tag tag1 <- tag1 is tagged to current commited
+	git tag <- shows all the tags
+	echo "tag1 after " > newfile.txt 
+	git add *
+	git commit -m "after tag1"
+	git show tag1 <-shows changes after tag1 
+	git describe --tags <- gives all info to 
+	git tag -a v1 -m "version1.0 release" <- new tag v1 is created for current commit after tag1
+	git tag <- now we have tag1 and v1 </pre>
+<h3>Branches</h3>
+<pre>	till now we were in master branch
+	git checkout -b development <- b for branch creates a new branch development and switches to it
+	git status <- shows on branch development
+	git branch -a <- shows all branchs marks * to current branch
+	git checkout master <- to change to master branch
+	echo "this is master only" > masterbranch.txt 
+	git add *
+	git commit -m "this is master file only" <- masterbranch.txt is not sync with development branch
+	git checkout development 
+	echo "this is development" > develomentbranch.txt 
+	git add devlopmentbranch.txt
+	git commit -m "this is devlopment file" <-developmentbranch.txt is not sync with master branch
+	<b>Merging</b>
+	git merge development --no-ff <- all latest commit files will merge to master from development
+	this is done from master branch</pre>
+<h3>GitLog</h3>
+<pre>	git log <- info abt checkins activities
+	git log | more <- more gives option to go page by page
+	-p -2 <-p give differnces betweem commits 2 gives last 2 activities
+	--stat <- more info like changes to which file 
+	--pretty=oneline <- activity in one lone
+	--pretty=format:"%h: %an, %ae, %cn, %cd, - %s" <-h hash,an authour name ,ae authour email,cn commiter name, cd commited date,s subject
+	--pretty=format:"%h: %an, %ae, %cn, %cd, - %s" --graph <- graphical view </pre>
+<h3>GITHUB</h3>
+<pre>	github is free anyone can signup
+	everything is public if it is used free
+	click add repo and name it. Can add discription and can choose public or private.
+	intialize with readme
+	click create repo
+	can clone through https and ssh
+	on setting we have ssh keys to connect
+	mkdir test
+	cd test
+	ssh-keygen
+	copy id_rsa.pub from../.ssh/
+	and paste in add ssh key and give it a title
+	go to explore ,go to repo
+	git clone httpsgiven-in-github
+	accept finger print
+	now we can use all git commands
+	git push origin master <- to push to github
+	git checkout -b develoment
+	add files
+	git add
+	git commit
+	git remote add origin server
+	git checkout -b branchname
+	git checkout branchname
+	git branch
+	git push origin develoment <- creates develoment branch in github and sync with it
+	git checkout master
+	git merge development <-to merge development branch with master</pre>
+<h3>Bitbucket</h3>
+<pre>	signup for free
+	free for 5 user both unlimited public and private
+	in manage in ssh keys copy and paste key
+	create repository
+	first create repo on local system and link it to remote
+	git remote add origin git@bitbucket.org.....</pre>
+<h3>Git Lab</h3>
+<pre><b> Prereq</b>
+	sudo yum install postfix <- mail services
+	sudo systemctl enable postfix
+	sudo systemctl start postfix
+	sudo systemctl disable iptables
+	sudo systemctl stop iptables
+	su -
+	cd /etc/selinux/
+	vim config 
+	decomment permissive <- gives warnings when accessing wrong files
+	make sure SELINUX= DISABLE <- if you disable it reboot system once
+	sudo yum install httpd <- install apache
+	ps aux |grep http <- to check apache running
+	sudo systemctl enable httpd <- creates links to apache
+	systemctl start httpd <- starts apache
+<b>Install and config gitlab </b>
+	gitlad ce edition
+	curl -o httplinkrpm for gitlab <- to download gitlab rpm 
+	sudo rpm -ivh gitlab..... <-
+	sudo gitlab-ctl reconfigure <- it reconfigures
+	go to gitlab directory got to gitlab.rb
+	vim gitlab.rb
+	external_url='ca-centos7ut01.corandassoc.local' <- change it
+	run again sudo gitlab-ctl reconfigure
+	in browser enter ca-centos7ut01.corandassoc.local
+	this will open gitlab community edition page
+	default username= root password=5ivel!fe 
+	setup new password
+<b>Architecture</b>
+	ps aux | grep postgresql
+	ps aux |grep sidekiq
+	run as root
+	cd /opt/gitlab/bin/sevice <- to see all services provide
+	cd /var/opt/gitlab/ <- all config files
+	all changes to be done in /etc/gitlab/gitlab.rb
+<b>User Administration and Secure Access</b>
+	login to gitlab community in browser
+	in admin area 
+	create new users
+	asign password
+	from the local users generate keys and copy id_rsa.pub
+	login as user in gitlab add ssh key to communicate
+<b>gilt Group Administration</b>
+	login as root to gitlab drowser
+	we added user accounts
+	create groups
+	in admin area
+	click on user1 in profile 
+	edit a group click add user into group and give devloper rights
+	user can create projects as developer 
+	login as user click as create project 
+	in local user create git repo and add to remote gitlab 
+	everything is same as regular git</pre>
+		
+</body>
+</html>

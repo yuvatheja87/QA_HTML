@@ -1,0 +1,123 @@
+<html>
+<head>
+	<title>BDD</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>CUCUMBER BDD</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="selenium.html">SELENIUM</a></li>
+		<li><a href="pageobject.html">PO&PF</a></li>
+		<li><a href="cucumber.html">CUCUMBER(BDD)</a></li>
+		<li><a href="seleniumgrid-saucelabs.html">Grid&SauceLabs</a></li>
+		<li><a href="junit.html">JUnit</a></li>
+		<li><a href="testng.html">TestNG</a></li>
+		<li><a href="log4j.html">Log4j</a></li>
+		<li><a href="sql.html">SQL</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+
+.feature file
+<div class="div1"><pre>
+Feature: Life of king
+
+In order to go office
+As a working guy
+I want to wish people
+
+@tester
+Scenario Outline:I am a kingman
+
+Given I work in Latenights
+When I meet watchmen
+Then I Greeted him
+
+Given I work in Mornings
+When I meet NewspaperssBoy
+Then I skipGreeting him
+
+Given I am on e-buyer homepage
+When I click the search button
+Then Search result should display different devices
+
+Given we work in "<weekday>"
+When we meet "<guy>"
+Then I skipGreeting him
+
+Examples:
+ |weekday |   guy     |
+ |tenpm   | watchmen  |
+ |ninepm  |  cabdriver|
+</pre></div>
+AttiudeTest.java
+<div class="div1"><pre>
+public class AttitudeTest {
+
+@Given("^I am on e-buyer homepage$")
+public void I_am_on_homepage () throws Throwable{
+	System.out.println("e-buyer homepage loaded");
+
+}
+	
+@Given("^I work in ([^\"]*)$")
+public void ln(String str)
+{
+	if(str.equals("Latenights"))
+	{
+		System.out.println("latenight automation");
+	}
+	
+	if(str.equals("Mornings"))
+	{
+		System.out.println("Morning automation");
+	}
+}
+
+@When("^I meet ([^\"]*)$")
+public void Imeet(String str){
+	if(str.equals("watchmen"))
+	{
+		System.out.println("watchmen automation");
+	}
+	if(str.equals("NewspaperBoy"))
+	{
+		System.out.println("NewspaperBoy automation");
+	}
+}
+@Given("^we work in \"([^\"]*)\"$")
+public void we_work_in(String ss) throws Throwable {
+    // Express the Regexp above with the code you wish you had
+	System.out.println(ss);
+   	}
+
+@When("^we meet \"([^\"]*)\">$")
+public void we_meet_(String arg1) throws Throwable {
+    // Express the Regexp above with the code you wish you had
+    
+}
+
+@Then("^I ([^\"]*) him$")
+public void gre(String str)
+{
+  if(str.equals("Greeted"))
+  {
+	System.out.println("Greeted automation");
+  }
+  if(str.equals("skipGreeting"))
+  {
+	System.out.println("skipGreeting automation");
+  }
+}
+}
+</pre></div>
+<h6>ytsn</h6><hr>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<html>
+<head>
+	<title>JENKINS</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>JENKINS</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+<pre>	Jenkins can automate large portions of that repeatable process
+	Continuos Integration
+	notifications about problems
+	Build Pipeline sections</pre>
+	<ul><li>Unit Test</li><li>Acceptance test</li><li>Packing</li><li>Reporting</li><li>Deployment</li>
+	<li>Notification</li></ul>
+<pre><b>PreRequisites</b>
+	which java <-gives version running 
+	sudo yum install nmap
+	yum install telnet
+	check for any running services on port 8080
+	cat /etc/services |grep 8080 <-to know any services register to port 8080
+	a)telnet localhost 8080
+	b)nmap -sT -O localhost <- shows any running service on 8080
+	c)netstat -anp | grep 8080 
+	download java jdk-8 stable version
+	install it
+	rpm -Uvh jdk-nsdkcnsijd
+	cd /usr/java
+	cd latest
+	alternatives --install /usr/bin/java java /usr/java/latest/bin/java 20000 <-to provide path of latest version install
+	alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 20000 
+	alternatives --install /usr/bin/jar jar /usr/java/latest/bin/jar 20000 
+	alternatives --config java 
+	java -version
+	javac -version
+	cd /etc/rc.d/
+	vi rc.local
+	export JAVA_HOME="/usr/java/latest"
+	esc :wq!
+<b>Install</b>
+	yum install wget
+	wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+	sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+	sudo yum update
+	yum install jenkins
+	systemctl enable jenkins.service
+	systemctl restart jenkin.service
+	telnet localhost 8080
+	on webbrowser 54.173.233.65:8080 <-this will take you to jenkins dashboard
+	systemctl stop jenkins.service <- now jenkins is not secure anyone can use who can connect to 8080
+<b>Configure</b>
+	cat /etc/passwrd |grep jenkins <- to see jenkins user and it is stated false
+	cd /etc/init.d 
+	cat jenkins | more 
+	directories in use 
+	/var/lib/jenkins
+	/var/lib/jenkins/job <- where jobs are store
+	/var/lib/jenkins/userContent <- we can document jenkins jobs in html
+	systemctl start jenkins.service
+	open browser goto 54.173.233.65:8080/userContent/ <-here we can see html documents
+	/var/cache/jenkins/war <- tomcat installations of jenkins
+	/var/cache/jenkins/WEB-INF <- all jar are stored
+	------------------/WEB_INF/web.xml 
+<b>Securing</b>
+	open jenkins page click managejenkins
+	configure global security
+	enable security
+		enable use own database
+		anybody can do anything 
+	click apply to save
+	reload the page to signup
+	provide details
+		user1
+		pswd1
+	still we can do anything it is not secure, now again goto global security and change 
+	anybody cando anything to loggedin can do anything
+	now only loggedin can do
+	goto global security and change to matrix security
+	you can add users/groups and you can choose activity they can do
+	managejenkins/manageuser to add new users 
+<b>managing Credentials</b>
+	on root
+	vi /etc/passwd
+	go to jenkins replace bin/false to /bin/bash
+	esc :wq!
+	sudo su jenkins -
+	psswrd is jenkins
+	exit
+	vi /etc/sudoers <- to make jenkins root
+	under root ALL=......
+	add jenkins ALL=(ALL)	NOPASSWD: ALL	<-nopasswd to avoid passwrd
+	esc :wq!
+	SSH -KEYGEN
+	sudo su jenkins -
+	ssh-keygen
+	got to browser
+	global credentials
+	add key,	scope: global,	user: jenkins,	select from the master.ssh and click add
+	ssh-copy -id jenkins@localhost
+	ssh-copy -id jenkins@54.84.177.229
+	ssh-copy -id jenkins@172.31.109.13
+	ssh-copy -id jenkins@tcox1/mylabserver.com
+	ssh localhost <- to login to local host
+	exit
+	exit
+	in the second server
+	adduser jenkins
+	passwd jenkins
+	give jenkins root access 
+	in the server1 
+	ssh-copy -id jenkins@ipofsecondserver
+	ssh to ipofsecondserver 
+	we can connect to it
+<b>Plugin Management</b>
+	manage jenkins/manage plugins
+<b>Backup</b>
+	plugins for backup process
+	managejenkins/manageplugins/available
+	search backup
+	backup <- backup archive jenkins home directory
+	thinbackup <-global and jobs specific configuration
+	managejenkins/backupmanager
+	setup
+	where is backup going to be <-/jenkins_backup
+	format of backup file
+	in system
+	cd /jenkins
+	mkdir/jenkins_backup
+	chown jenkins:jenkins /jenkins/jenkins_backup
+	save 
+	now we can backup and restore backup
+<b>Create and Build Slave</b>
+	login to jenkins
+	On server2(slave)
+	sudo su jenkins -
+	ssh-keygen
+	ssh-copy -id jenkins@localhost
+	ssh-copy -id jenkins@local ip address
+	On server 1
+	login to jenkins
+	managejenkins/manageNodes/newnode
+	name it
+	host: 172.38.21.223
+	give all details
+<b>Build jenkins job</b>
+	login to jenkins
+	click new item
+	freestyle
+	maven
+	external job
+	multi-config projects
+	select 1
+	takes to build screen
+	fill up the details
+<b>Working with GITHUB</b>
+	login to jenkins 
+	sudo su jenkins -
+	copy public key and login to git instance
+	in settings/ssh keys/add sshkey
+	and paste the keys of both the master and slave 
+	now goto jenkins/managejenkins/manageplugins/available
+	search for git(gitclient,git,gitserver,githubapi,github) and install it
+	now create new item 
+	nameit,freestyle project
+	choose discard old builds
+	in githubproject paste url of for project
+	example
+	execute shell
+		ssh jenkins@ipaddrr
+		cd /home/jenkins/workspace
+		rm -rf html 
+		git clone pastehtmllinkoffile html
+		sudo cp -rf html/* /var/www/html/
+		sudo chown root:root /var/www/html -R 
+		sudo chmod 755 /var/www/html
+		sudo chmod 644 /var/www/html/*
+	save and buildnow
+<b>Scheduling Builds</b>
+	set Buildtriggers/Build periodic time in jobconfig
+<b>build Linking-Upstream and Downstream</b>
+	set Buildtriggers/Buildafterotherprojectisbuild enter upstream project
+<b>Freestyle Maven Project</b>
+	java based is designed to complex javapackages 
+	two ways
+	/managejenkins/configuresystem/maven
+	bin/maven <-pre install maven
+	save it 
+	newitem
+	choose freestyle
+	download pom.xml file to /builds directory
+	execute shell
+		scp jenkins@localip(pomfile):/builds/pom.xml /home/jenkins/pom.xml 
+		ssh jenkins@targetip 'cd /home/jenkins | mvn help:effective.pom 
+	save 
+	click BuildNow
+	or just create maven project <- it gives issues
+<b>Managing Remote Systems with Jenkins</b>
+	create newitem/freestyle/
+	execute shell
+		ssh jenkins@ip(sourefile) 'sudo httpd -k stop | sudo httpd -f /root/httpd.conf -k start'
+<b>Parameterized Build</b>
+	newitem/frestyle/
+	select this build is parameterized <- to pass ip of required target
+	add parameter
+	name HOST
+	executeshell
+		ssh jenkins@HOST(to connect) 'sudo apt-get update'
+	save
+	to build it 
+	click buildwithparameterized <- provide HOST:ip
+<b>Interface Tweak-Green for sucess</b>
+	managejenkins/manageplugins/available
+	search green
+	GreenBalls<-install it to change blue ball to green for sucess
+</pre>
+</body>
+</html>

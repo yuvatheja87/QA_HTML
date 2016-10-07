@@ -1,0 +1,134 @@
+<html>
+<head>
+	<title>QA</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>Page Object and PageFactory</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="selenium.html">SELENIUM</a></li>
+		<li><a href="pageobject.html">PO&PF</a></li>
+		<li><a href="cucumber.html">CUCUMBER(BDD)</a></li>
+		<li><a href="seleniumgrid-saucelabs.html">Grid&SauceLabs</a></li>
+		<li><a href="junit.html">JUnit</a></li>
+		<li><a href="testng.html">TestNG</a></li>
+		<li><a href="log4j.html">Log4j</a></li>
+		<li><a href="sql.html">SQL</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+<table>
+<tr><th><h3>Page Object</h3></th><th><h3>Page Factory</h3></th></tr>
+<tr><td><pre>public class LoginpagePO {
+  WebDriver driver;
+  public LoginpagePO(WebDriver driver) {
+	this.driver=driver;
+  }
+	
+<b>   By username=By.xpath(".//*[@id='login1']");</b>
+   By Password=By.name("passwd");
+   By go=By.name("proceed");
+   By home=By.linkText("Home");
+   
+<b>  public WebElement Emaild()
+   {
+	   return driver.findElement(username);
+   }</b>
+         
+   public WebElement Password()
+   {
+	   return driver.findElement(Password);
+   }
+   
+   public WebElement submit()
+   {
+	   return driver.findElement(go);
+   }
+   
+   public WebElement Home()
+   {
+	   return driver.findElement(home);
+   }
+}</pre></td><td><pre>
+public class LoginpagePF {
+  WebDriver driver;
+  public LoginpagePF(WebDriver driver) {
+	this.driver=driver;
+	PageFactory.initElements(driver, this);
+  }
+
+<b>  @FindBy(xpath=".//*[@id='login1']")
+  WebElement username;</b>
+	
+  @FindBy(name="passwd")
+  WebElement Password;
+	
+  @FindBy(linkText="Home")
+  WebElement home;
+	
+  @FindBy(name="proceed")
+  WebElement go;
+	
+<b>   public WebElement Emaild()
+   {
+	   return username;
+   }</b>
+         
+   public WebElement Password()
+   {
+	   return Password;
+   }
+   
+    public WebElement Home()
+   {
+	   return home;
+   }
+}</pre></td></tr>
+<tr><td><pre>
+public class TestPoPf {
+
+	@Test
+	public void LoginPO()
+	{
+		System.setProperty("webdriver.chrome.driver", "E:\\QA\\jars\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://mail.rediff.com/cgi-bin/login.cgi");
+		
+		LoginpagePO rd=new LoginpagePO(driver);
+		rd.Emaild().sendKeys("hello");
+		rd.Password().sendKeys("hello");
+		//rd.submit().click();
+		rd.Home().click();
+		HomepagePO rh=new HomepagePO(driver);
+		rh.Search().sendKeys("samsung");
+		rh.Submit().click();
+	}</pre></td><td><pre>
+	
+	@Test
+	public void LoginPF()
+	{
+		WebDriver driver1=new FirefoxDriver();
+		driver1.get("https://mail.rediff.com/cgi-bin/login.cgi");
+		
+		LoginpagePF rd=new LoginpagePF(driver1);
+		rd.Emaild().sendKeys("hello");
+		rd.Password().sendKeys("hello");
+		//rd.submit().click();
+		
+		rd.Home().click();
+		HomepagePF rh=new HomepagePF(driver1);
+		rh.Search().sendKeys("apple");
+		rh.Submit().click();
+	}
+}</pre></td></tr>
+</table>
+
+</body>
+</html>

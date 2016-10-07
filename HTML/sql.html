@@ -1,0 +1,310 @@
+<html>
+<head>
+	<title>QA</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script type="text/javascript" src="myscript.js"></script>
+</head>
+<body>
+<center><h1>QA</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="selenium.html">SELENIUM</a></li>
+		<li><a href="seleniumgrid-saucelabs.html">Grid&SauceLabs</a></li>
+		<li><a href="junit.html">JUnit</a></li>
+		<li><a href="testng.html">TestNG</a></li>
+		<li><a href="log4j.html">Log4j</a></li>
+		<li><a href="sql.html">SQL</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+download jdbc jars for oracle/mysql databases respectively.<br>
+<div class="div1"><h3>JDBC Connection</h3>
+<pre>Driver D = new oracle.jdbc.driver.OracleDriver();
+DriverManager.registerDriver(D);
+Connection connect = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/xe","system","simham");
+
+Statement S1=conn.createStatement();
+String sql1 = "CREATE TABLE sup1 " +"(id INTEGER not NULL, " +" item1 VARCHAR(15), " 
+		+" support INTEGER, " + " PRIMARY KEY ( id ))"; 
+S1.executeUpdate(sql1);
+PreparedStatement ps1 = conn.prepareStatement("insert into sup1 values(?,?,?)");
+	ps1.setInt(1,m);
+	ps1.setString(2,item);
+	ps1.setDouble(3,supp);
+	ps1.executeQuery();
+
+ResultSet RS1=S1.executeQuery("select * from itemslist where itemid="+j);
+RS1.next();
+String item = new String(RS1.getString(2));	
+
+conn.close();
+</pre></div>
+<div class="div1"><b>Data Types</b><pre>
+number(10)-465162
+int
+varchar(150)
+varchar2(20)-"wcwscescd23w"
+Text
+BLOB	->binary large objects
+CLOB	->character Large Object
+Date()-(yyyy-mm-dd)
+
+<a href="http://www.w3schools.com/sql/sql_datatypes.asp" target="_blank">Click here</a>for more data types</pre></div>
+<div class="div1"><b>Constraints</b>
+<pre>NOT NULL
+UNIQUE
+PRIMARY KEY
+FOREIGN KEY
+CHECK ->Ensure that the value in column meets specific condition
+DEFAULT</PRE></div>
+<div class="div1"><b>Functions</b>
+<pre>AVG(column_name)
+COUNT(column_name)
+MAX(column_name)
+MIN(column_name)
+SUM(column_name)
+UCASE()
+LCASE()
+MID(column_name,1,4)
+LEN(column_name)
+ROUND(column_name,1)
+NOW()
+FORMAT(Now(),'YYYY-MM-DD')
+</pre></div>
+
+<h6>ytsn</h6><hr>
+<h3>SQL Statements</h3>
+<div class="div1"><pre><b>Create Database</b>
+CREATE DATABASE my_db;
+<b>Alter Database</b>
+
+<b> DROP DATABASE</b>
+DROP DATABASE database_name
+<b>Create Table</b>
+CREATE TABLE PERSONS(
+	PERSONID INT PRIMARY KEY,
+	LASTNAME VARCHAR(255) NOT NULL,
+	FIRSTNAME VARCHAR(255),
+	ADDRESS VARCHAR(255),
+	CITY VARCHAR(255) DEFAULT 'CARROLLTON',
+	COUNTRY VARCHAR2(200),
+	PHONE NUMBER(10) UNIQUE,
+	CHECK(P_ID>0)
+);
+CREATE TABLE ORDERS(
+	O_ID INT NOT NULL,
+	P_ID INT,
+	PRIMARY KEY (O_ID),
+	FOREIGN KEY (P_ID) REFERENCES PERSONS(PERSONID)
+);
+<b>Alter Table</b>
+ALTER TABLE TABLE_NAME ADD unique(PERSONID)
+ALTER TABLE TABLE_NAME DROP unique(PERSONID)
+ALTER TABLE table_name ADD column_name datatype
+ALTER TABLE table_name MODIFY column_name datatype
+
+<b>DROP Table</b>
+DROP TABLE table_name
+<b>TRUNCATE table</b>
+TRUNCATE TABLE table_name
+</pre></div>
+<div class="div1"><pre><b>SELECT</b>
+SELECT PERSONID AS PID,DISTINCT Lower(LASTNAME) AS LNAME,UPPER(FNAME) FROM PERSONS AS PERSON 
+	WHERE (CITY='CARROLLTON' OR CITY='BOSTON') AND COUNTRY='USA'
+	GROUP BY CITY
+	HAVING AVG(PID) > 10
+	ORDER BY PERSONID ASC, LASTNAME DESC;
+	
+SELECT <i>TOP 10</i> * FROM PERSONS;
+SELECT <i>TOP 20 PERCENT</i> * FROM PERSONS;
+SELECT * FROM PERSONS
+	WHERE COUNTRY <i>LIKE</i> '%LAND%' AND COUNTRY <i>NOT LIKE</i> '%S' OR COUNTRY LIKE 'L_ON'
+		OR COUNTRY LIKE '[A-Z]%' OR CITY LIKE '[!BSP]%'
+SELECT * FROM PERSONS
+	WHERE City <i>IN</i> ('Paris','London');
+SELECT * FROM PERSONS
+	WHERE PERSONID <i>BETWEEN</i> 10 AND 20;
+SELECT * FROM PERSONS
+	WHERE PERSONID <i>NOT BETWEEN</i> 10 AND 20;		
+<b>UPDATE</b>
+UPDATE PERSONS SET PERSONID=5 
+	WHERE LASTNAME='YUVA';
+<b>DELETE</b>
+DELETE FROM PERSONS WHERE PERSONID=1;
+<b>INSERT INTO</b>
+INSERT INTO PERSONS VALUES (1,'YUVA','TEJA',......)
+INSERT INTO PERSONS (PERSONID,LASTNAME,FIRSTNAME)VALUES (1,'YUVA','TEJA')
+
+<b>Create Index</b>
+CREATE INDEX PIndex ON Persons (LastName)
+<b>Drop Index</b>
+DROP INDEX index_name
+ALTER TABLE table_name DROP INDEX index_name
+</pre></div><h6>ytsn</h6><hr>
+<h3>JOIN</h3>
+<div class="div1"><pre><b>INNER JOIN</b>
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+	FROM Orders INNER JOIN Customers
+	ON Orders.CustomerID=Customers.CustomerID;
+SELECT column_name(s)
+	FROM table1 JOIN table2
+	ON table1.column_name=table2.column_name;
+<b>LEFT JOIN</b>
+SELECT column_name(s)
+	FROM table1 LEFT OUTER JOIN table2
+	ON table1.column_name=table2.column_name;
+<b>RIGHT JOIN</b>
+SELECT column_name(s)
+	FROM table1 RIGHT JOIN table2
+	ON table1.column_name=table2.column_name;
+<b>FULL JOIN</b>
+SELECT column_name(s)
+	FROM table1 FULL OUTER JOIN table2
+	ON table1.column_name=table2.column_name;	
+</pre></div>	
+<div class="div1"><pre>SELECT City FROM Customers
+	<i>UNION</i>
+	SELECT City FROM Suppliers
+	ORDER BY City;	
+SELECT City FROM Customers
+	<i>UNION ALL</i>
+	SELECT City FROM Suppliers
+	ORDER BY City;	
+	
+SELECT *
+	INTO CustomersBackup2013
+	FROM Customers
+	WHERE Country='Germany';
+	
+INSERT INTO Customers (CustomerName, Country)
+	SELECT SupplierName, Country FROM Suppliers;
+</pre></div><h6>ytsn</h6><hr>	
+<div class="div1"><pre>CREATE TABLE Persons
+	(
+	ID int NOT NULL <i>AUTO_INCREMENT</i>,
+	LastName varchar(255) NOT NULL,
+	FirstName varchar(255),
+	Address varchar(255),
+	City varchar(255),
+	PRIMARY KEY (ID)
+	)	
+	syntax for oracle
+	CREATE <i>SEQUENCE</i> seq_person
+	MINVALUE 1
+	START WITH 1
+	INCREMENT BY 1
+	CACHE 10
+	
+	INSERT INTO Persons (ID,FirstName,LastName)
+		VALUES (seq_person.nextval,'Lars','Monsen')
+</pre></div>	
+<div class="div1"><b>Views</b>
+<pre>CREATE OR REPLACE VIEW view_name AS
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+
+DROP VIEW view_name
+</pre></div>
+<div class="div1"><b>NULL</b>
+<pre>SELECT LastName,FirstName,Address FROM Persons
+	WHERE Address <i>IS NULL</i>
+SELECT LastName,FirstName,Address FROM Persons
+	WHERE Address <i>IS NOT NULL</i>
+SELECT ProductName,UnitPrice*(UnitsInStock+NVL(UnitsOnOrder,0))
+	FROM Products</pre></div>	
+<div class="div1"><b>EXISTS</b>
+<pre>SELECT a.FirstName, a.LastName  
+	FROM Person.Person AS a  
+	WHERE <i>EXISTS </i> 
+	(SELECT * FROM HumanResources.Employee AS b  
+		WHERE a.BusinessEntityID = b.BusinessEntityID  
+		AND a.LastName = 'Johnson');
+SELECT a.FirstName, a.LastName  
+	FROM Person.Person AS a  
+	WHERE <i>NOT EXISTS</i>  
+	(SELECT * FROM HumanResources.Employee AS b  
+		WHERE a.BusinessEntityID = b.BusinessEntityID  
+		AND a.LastName = 'Johnson');
+</pre></div>
+<div class="div1"><pre>SELECT DISTINCT s.Name  
+	FROM Sales.Store AS s   
+	WHERE s.Name = <i>ANY</i>  
+	(SELECT v.Name  
+		FROM Purchasing.Vendor AS v ) ; 
+
+SELECT DISTINCT s.Name  
+	FROM Sales.Store AS s   
+	WHERE s.Name <i>IN </i> 
+	(SELECT v.Name  
+		FROM Purchasing.Vendor AS v ) ;</pre></div>
+<h6>ytsn</h6><hr>
+<div class="div1"><h3>Triggers</h3>
+<pre>ALTER TRIGGER TRIGGERNAME DISABLE
+DROP TRIGGER TRIGGERNAME 
+<b>Types of Triggers</b>
+Row ad Statement Triggers
+Before and After Triggers
+Instead of Triggers 	
+Triggers on system events and User events</pre>
+<b>example</b>
+<pre>CREATE OR REPLACE TRIGGER my_test_trg
+BEFORE INSERT OR UPDATE OR DELETE ON my_table
+FOR EACH ROW
+BEGIN
+  -- Flags are booleans and can be used in any branching construct.
+  CASE
+    WHEN INSERTING THEN
+      -- Include any code specific for when the trigger is fired from an INSERT.
+      -- Also fired for INSERT as part of a MERGE.
+    WHEN UPDATING THEN
+      -- Include any code specific for when the trigger is fired from an UPDATE.
+      -- Also fired for UPDATE as part of a MERGE.
+    WHEN DELETING THEN
+      -- Include any code specific for when the trigger is fired from a DELETE.
+      -- Does not fire for DELETE clause of a MERGE.
+  END CASE;
+END;</pre></div>
+<pre>
+CREATE OR REPLACE TRIGGER TRIGGER_NAME
+AFTER UPDATE OF SALARY ON EMPLYEE
+FOR EACH ROW
+WHEN (NEW.DNO IS NOT NULL)
+UPDATE DEPARTMENT
+	SET TOTAL_SAL=TOTAL_SAL+NEW.SALARY-OLD.SALARY WHERE DNO=NEW.DNO 
+	
+CREATE TRIGGER TRIGGERNAME
+AFTER UPDATE OF SALARY ON EMPLOYEE
+REFERENCING OLDTABLE AS O, NEWTABLE AS NEW
+FOR EACH Statement
+WHEN EXISTS(SELECT *FROM N WHERE N.DNO IS NOT NULL)
+	OR EXISTS(SELECT * FR0M O WHERE O.DNO IS NOT NULL)
+UPDATE DEPARTMENT AS D
+	SET TOTALSAL=TOTALSAL+(SELECT SUM(N.SALARY) FROM N WHERE D.DNO=N.DNO)-
+		(SELECT SUM(O.SALARY)FROM O WHERE D.DNO=O.DNO)
+	WHERE D.DNO IN (SELECT DNO FROM N )UNION(SELECT DNO FROM O)
+</pre>	
+<b>functiona dependency</b>
+<pre>key/superkey/unique  -> other columns then it satisfies FD
+example {teacher,text}-> course
+ssn -> employee name 
+pnumber -> {pname,plocation}</pre>
+<h3>Normal Forms</h3>
+<pre><b>1NF</b>
+any attribute in a tuple must be single value
+<b>2NF</b>
+r{a,b,c,d}
+FD AB->C ab is a key and  c,d should depend on both a and b.
+<b>3NF</b>
+FD X->A is in 3NF if 1)X is a superkey or 2)A is a prime attribute
+<b>Boyce-Cold normal form(BCNF)</b>
+FD X->A is in BCNF if X is a superkey. 
+all BCNF are in 3NF</pre>
+<h6>ytsn</h6><hr>
+</body>
+</html>

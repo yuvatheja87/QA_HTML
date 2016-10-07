@@ -1,0 +1,202 @@
+<html>
+<head>
+	<title>MAVEN</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+	<script src="myscripts.js"></script>
+</head>
+<body>
+<center><h1>MAVEN</h1></center>
+<div id="tabhead">
+	<ul id="tabs" style="list-style-type:none">
+		<li><a href="index.html">HOME</a></li>
+		<li><a href="linux.html">LINUX ESSENTIALS</a></li>
+		<li><a href="git.html">GIT(HUB)</a></li>
+		<li><a href="ant.html">ANT</a></li>
+		<li><a href="maven.html">MAVEN</a></li>
+		<li><a href="jenkins.html">JENKINS</a></li>
+	</ul>
+</div>
+<pre>
+Build Tool
+<h3>Installing</h3>
+	download maven bin.zip and extract it
+	setup environment  variable
+	M2_HOME=/extracted path
+	PATH=${PATH}:%M2_HOME%/bin
+	mvn --version
+	mkdir myapp
+	cd myapp
+	mvn archetype:generate <-maven downloads all the required plugins 
+	ask choose a number choose default 106 
+	version select latest
+	groupid : yuva.theja.app <-like package
+	artifactid:  tejaapp <-name of jar or war
+	thia creates folder tejaapp 
+	it contains pom.xml and src 
+	in src it creates main and test folders
+	in main yuva/theja/ and creates app.java file
+	inside folder contains pom.xml
+	mvn compile <- downloads all the dependency and compiles
+	mvn package <- packages into jar file, it also runs junit tests if any written
+	java -cp target/jarname yuva.theja.app  <- this will execute jar file
+<b>archetype</b>
+	Archetype
+	GroupID
+	ArtifactID <-output file type like jar,war
+	Version <-version of our project
+	Package 
+<b>pom.xml</b>
+	it contains archetype details 
+	properties,dependencies like Junit
+<b>build Phases</b>	
+	build lifecycle
+	consists of phases <-compile,test	
+	default behavior of phases
+	specify the build phase you nedd and previous phases run automatically
+	<b>Phases</b>
+	validate <-check everything is in order
+	compile
+	test
+	package
+	install <-install package into local maven repo
+	deploy <-to publish to remote repo
+	mvn compile <- compiles and saves .class files in to target directory
+	mvn test
+	mvn package <- builds and saves to target directory
+	mvn install 
+<h3>Adding dependencies</h3>
+	inside project folder
+	mvn clean <- removes all class and jar available brings to stage before compile phase
+	vim app.class
+	import org.slf4j.*;
+	under main
+	Logger logger = LoggerFactory.getLogger(app.class);
+	logger.info("Hello World");
+	save 
+	vim pom.xml
+	<textarea rows="15" cols="100" >
+	<dependencies>
+		<dependency>
+			<groupid>junit</groupid>
+			<artifactid>junit</artifactid>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupid>org.slf4j</groupid>
+			<artifactid>slf4j.api</artifactid>
+			<version>1.6.1</version>
+			<scope>compile</scope>  <-compile id default scope
+		</dependency> 
+	</dependencies>	
+	</textarea>
+<h3>Java web application</h3>
+	mvn archetype:generate
+	choose number : 269
+	groupid : yuvatheja
+	artifactid: mywebapp
+	vim pom.xml
+	<textarea rows="15" cols="100" >
+	<dependencies>
+		<dependency>
+			<groupid>javax.servlet</groupid>
+			<artifactid>servlet.api</artifactid>
+			<version>2.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupid>javax.servlet.jsp</groupid>
+			<artifactid>jsp.api</artifactid>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupid>junit</groupid>
+			<artifactid>junit</artifactid>
+			<version>3.8.1</version>
+			<scope>test</scope> 
+		</dependency> 
+	</dependencies>	
+	<build>
+		<plugins>
+			<plugin>
+				<groupid>org.apache.maven.plugins</groupid>
+				<artifactid>maven-compiler-plugin</artifactid>
+				<version>2.0.2</version>
+				<configuration>			<-for maven v2 1.4 is default v3 1.5 is default
+					<source>1.4</source>
+					<target>1.4</target>
+				</configuration>
+			</plugin>
+		</plugins>	
+	</build>
+	</textarea>
+<b>plugins</b>	
+	generix uses 1.5 maven compiler-plugin
+	<textarea rows="15" cols="100" >
+	<build>
+		<plugins>
+			<plugin>
+				<groupid>org.apache.maven.plugins</groupid>
+				<artifactid>maven-compiler-plugin</artifactid>
+				<version>2.0.2</version>
+				<configuration>			<-for maven v2 1.4 is default v3 1.5 is default
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>	
+	</build>
+	</textarea>
+<b>Jetty Plugin</b>	
+	lite weight servlet container
+	<textarea rows="10" cols="100" >
+	<build>
+	<plugins>
+		<plugin>
+			<groupid>org.mortbay.jetty</groupid>
+			<artifactid>maven-jetty-plugin</artifactid>
+			<version>6.1.10</version>
+		</plugin>
+	</plugins>	
+	</build>
+	</textarea>
+	mvn jetty:run
+	in browser
+	http://localhost:8080/webapp
+	the above will work for changes in web pages but will not work for any changes in class
+	so we need to add configuration to compile and run
+	<textarea rows="10" cols="100" >
+	<build>
+	<plugins>
+		<plugin>
+			<groupid>org.mortbay.jetty</groupid>
+			<artifactid>maven-jetty-plugin</artifactid>
+			<version>6.1.10</version>
+			<configuration>
+				<scanIntervalSeconds>10</scanIntervalSeconds>
+			</configuration>
+		</plugin>
+	</plugins>	
+	</build>
+	</textarea>
+<b>eclipse plugin for maven</b>	
+	mvn eclipse:eclipse <-maven automatically connects to repo and download 
+	it creates eclipse project
+	open eclipeIDE file/import/existing project
+	it opens all files it takes from maven
+	add libraries from .m2 folder
+	create new variable/name=M2_REPO/PATH: /home/user/.m2/repository
+	<b>install maven plugin in eclipse</b>
+	help/installnewsoftware
+	work with: all available sites
+	search maven
+	select maven integration for eclipse
+<b>creating maven project from eclipse</b>
+	new/other/maven/mavenproject
+	select archetype,groupid,artifactid,version 
+	right click on pom.xml to run maven commands
+	
+</pre>
+</body>
+</html>
